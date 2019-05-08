@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Tweet Credits</h1>
+
+<main>
+    <div class="row">
+        {% for dict_item in products %}
+        <div class="col-md-4">  
+            <div class="card" style="width: 18rem;">
+                <img src="http://placehold.it/250x250" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{dict_item["title"]}}</h5>
+                    <p class="card-text">{{dict_item["price"]}}</p>
+                    <p class="card-text">{{dict_item["desc"]}}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+{% endblock content %}
