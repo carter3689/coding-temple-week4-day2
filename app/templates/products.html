@@ -12,9 +12,9 @@
                 <img src="http://placehold.it/250x250" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{dict_item["title"]}}</h5>
-                    <p class="card-text">{{dict_item["price"]}}</p>
+                    <p id="price" class="card-text">{{dict_item["price"]}}</p>
                     <p class="card-text">{{dict_item["desc"]}}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="#" id="custom-button" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         </div>
@@ -23,3 +23,33 @@
 </main>
 
 {% endblock content %}
+
+
+{% block scripts %}
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script>
+    var handler = StripeCheckout.configure({
+      key: "{{ key }}",
+      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+      locale: "auto",
+      token: function(token) {
+        console.log(token);
+      }
+    });
+
+    document.getElementById("custom-button").addEventListener("click", function(e) {
+      // Open Checkout with further options:
+      handler.open({
+        name: "TestDriven.io",
+        description: "A Flask Charge",
+        amount: 500
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation:
+    window.addEventListener("popstate", function() {
+      handler.close();
+    });
+  </script>
+{% endblock %}
